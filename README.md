@@ -8,7 +8,7 @@ This project is still under development
   * Install via pip: pip install python-telegram-bot --upgrade
 * [youtube-dl](https://github.com/rg3/youtube-dl/)
   * Install via pip: sudo -H pip install --upgrade youtube-dl
-* fmpeg
+* ffmpeg
   * Ubuntu: sudo apt-get install ffmpeg
 ## Running the bot
 `python3 bot.py`
