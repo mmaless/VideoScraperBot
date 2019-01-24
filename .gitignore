@@ -1,5 +1,6 @@
 config.py
 __pycache__/
-videos/
+mp4/
+mp3/
 .vscode/
 bot.log
