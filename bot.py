@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from config import telegram_token_test, admin_chat_id, video_path, audio_path, ftp_site
+from config import telegram_token, admin_chat_id, video_path, audio_path, ftp_site
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 import youtube_dl
@@ -15,7 +15,12 @@ logger = logging.getLogger(__name__)
 
 
 def start(bot, update):
-    update.message.reply_text("Hi! this bot uses the command line utility \"youtube-dl\" to download videos from YouTube.com and other video sites. \nTo download a video use the command \\download followed by a link \nExample: \\download https://www.youtube.com/watch?v=dQw4w9WgXcQ'")
+    update.message.reply_text(
+        "Hi! this bot uses the command line utility \"youtube-dl\" " +
+        "to download videos or audios from YouTube.com and other video sites. \n" +
+        "To download a video use the command \\mp4 " +
+        "and for audio use \\mp3 followed by a link \n" +
+        "Example: \\mp4 https://www.youtube.com/watch?v=dQw4w9WgXcQ'")
 
 
 def test(bot, update):
@@ -80,7 +85,7 @@ def error(bot, update, error):
 
 
 def main():
-    updater = Updater(token=telegram_token_test, request_kwargs={
+    updater = Updater(token=telegram_token, request_kwargs={
                       'read_timeout': 1000, 'connect_timeout': 1000})
     dp = updater.dispatcher
     dp.add_handler(CommandHandler('start', start))
