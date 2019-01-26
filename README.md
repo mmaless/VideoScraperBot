@@ -10,5 +10,10 @@ This project is still under development
   * Install via pip: sudo -H pip install --upgrade youtube-dl
 * ffmpeg
   * Ubuntu: sudo apt-get install ffmpeg
+## Commands
+* Simply just send a link to download the video
+* \mp4 followed by a link to download a video
+* \mp3 followed by a link to download an audio
+* \test check if the bot is working
 ## Running the bot
 `python3 bot.py`
