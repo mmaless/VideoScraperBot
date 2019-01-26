@@ -44,7 +44,6 @@ def mp4(bot, update):
             ydl.download([link])
         video = '{0}.{1}'.format(video_id, video_ext)
         video_size = os.path.getsize(video_path + video)
-        update.message.reply_text(link)
         if video_size < 50000000:
             bot.send_video(chat_id=update.message.chat_id, video=open(
                 video_path + video, 'rb'), timeout=1000)
