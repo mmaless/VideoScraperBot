@@ -37,7 +37,7 @@ def mp4(bot, update):
         update.message.reply_text(
             'You are not authorized to perform this action!')
         return
-    link = link_searh(update.message.text)
+    link = link_search(update.message.text)
     if link:
         ydl_opts = {
             'format': 'mp4',
@@ -64,7 +64,7 @@ def mp4(bot, update):
 def mp3(bot, update):
     if update.message.chat_id not in admin_chat_id:
         return
-    link = link_searh(update.message.text)
+    link = link_search(update.message.text)
     if link:
         ydl_opts = {
             'format': 'bestaudio/best',
@@ -93,7 +93,7 @@ def mp3(bot, update):
         update.message.reply_text('That URL looks invalid')
 
 
-def link_searh(message):
+def link_search(message):
     link = re.search(LINK_REGEX, message)
     if link:
         return link.group(0)
