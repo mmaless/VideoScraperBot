@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from config import telegram_token, admin_chat_id, video_path, audio_path, ftp_site
+from config import telegram_token, admin_chat_id, user_chat_id, video_path, audio_path, ftp_site
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from datetime import datetime
@@ -20,19 +20,42 @@ LINK_REGEX = r"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6
 
 def start(bot, update):
     update.message.reply_text(
-        "Hi! this bot uses the command line utility \"youtube-dl\" " +
+        "Hi! this bot uses the command line utility \"youtube-dl\" https://github.com/ytdl-org/youtube-dl" +
         "to download videos or audios from YouTube.com and other video sites. \n" +
-        "To download a video simply just send the link or use the command \\mp4 " +
+        "To download a video just send the link or use the command \\mp4 " +
         "and for audio use \\mp3 followed by the link \n" +
-        "Example: \\mp4 https://www.youtube.com/watch?v=dQw4w9WgXcQ'")
-
+        "Example: \\mp4 https://www.youtube.com/watch?v=dQw4w9WgXcQ \n" +
+        "Code: https://github.com/mhmdess/VideoScraperBot")
 
 def test(bot, update):
     update.message.reply_text('Works!')
 
+def mp4list(bot, update):
+    if update.message.chat_id not in admin_chat_id:
+        error(bot, str(update.message.chat_id), 'failed attempt to list mp4 files')
+        update.message.reply_text(
+            'You are not authorized to perform this action!')
+        return
+    files = os.listdir(video_path)
+    msg = ''
+    for file in files:
+        msg += ftp_site + 'mp4/' + file + '\n'
+    update.message.reply_text(msg)
+
+def mp3list(bot, update):
+    if update.message.chat_id not in admin_chat_id:
+        error(bot, str(update.message.chat_id), 'failed attempt to list mp3 files')
+        update.message.reply_text(
+            'You are not authorized to perform this action!')
+        return
+    files = os.listdir(audio_path)
+    msg = ''
+    for file in files:
+        msg += ftp_site + 'mp3/' + file + '\n'
+    update.message.reply_text(msg)
 
 def mp4(bot, update):
-    if update.message.chat_id not in admin_chat_id:
+    if update.message.chat_id not in user_chat_id:
         error(bot, str(update.message.chat_id), 'failed attempt to download')
         update.message.reply_text(
             'You are not authorized to perform this action!')
@@ -62,7 +85,7 @@ def mp4(bot, update):
 
 
 def mp3(bot, update):
-    if update.message.chat_id not in admin_chat_id:
+    if update.message.chat_id not in user_chat_id:
         return
     link = link_search(update.message.text)
     if link:
@@ -102,6 +125,7 @@ def link_search(message):
 
 
 def error(bot, update, error):
+    update.message.reply_text('An error occured while trying to execute this action')
     logger.error('Update "%s" caused error "%s"', update, error)
 
 
@@ -113,6 +137,8 @@ def main():
     dp.add_handler(CommandHandler('test', test))
     dp.add_handler(CommandHandler('mp4', mp4))
     dp.add_handler(CommandHandler('mp3', mp3))
+    dp.add_handler(CommandHandler('mp3list', mp3list))
+    dp.add_handler(CommandHandler('mp4list', mp4list))
     dp.add_handler(MessageHandler(Filters.text, mp4))
     dp.add_error_handler(error)
     updater.start_polling()
