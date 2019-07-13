@@ -27,12 +27,15 @@ def start(bot, update):
         "Example: \\mp4 https://www.youtube.com/watch?v=dQw4w9WgXcQ \n" +
         "Code: https://github.com/mhmdess/VideoScraperBot")
 
+
 def test(bot, update):
     update.message.reply_text('Works!')
 
+
 def mp4list(bot, update):
     if update.message.chat_id not in admin_chat_id:
-        error(bot, str(update.message.chat_id), 'failed attempt to list mp4 files')
+        error(bot, str(update.message.chat_id),
+              'failed attempt to list mp4 files')
         update.message.reply_text(
             'You are not authorized to perform this action!')
         return
@@ -42,9 +45,11 @@ def mp4list(bot, update):
         msg += ftp_site + 'mp4/' + file + '\n'
     update.message.reply_text(msg)
 
+
 def mp3list(bot, update):
     if update.message.chat_id not in admin_chat_id:
-        error(bot, str(update.message.chat_id), 'failed attempt to list mp3 files')
+        error(bot, str(update.message.chat_id),
+              'failed attempt to list mp3 files')
         update.message.reply_text(
             'You are not authorized to perform this action!')
         return
@@ -54,6 +59,7 @@ def mp3list(bot, update):
         msg += ftp_site + 'mp3/' + file + '\n'
     update.message.reply_text(msg)
 
+
 def mp4(bot, update):
     if update.message.chat_id not in user_chat_id:
         error(bot, str(update.message.chat_id), 'failed attempt to download')
@@ -61,18 +67,19 @@ def mp4(bot, update):
             'You are not authorized to perform this action!')
         return
     link = link_search(update.message.text)
+    date = '{:%Y-%m-%d}'.format(datetime.now())
     if link:
         ydl_opts = {
             'format': 'mp4',
             'quiet': True,
-            'outtmpl': video_path + '%(id)s.%(ext)s',
+            'outtmpl': video_path + date + '_%(id)s.%(ext)s',
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             video_id = info_dict.get("id", None)
             video_ext = info_dict.get("ext", None)
             ydl.download([link])
-        video = '{0}.{1}'.format(video_id, video_ext)
+        video = date + '_{0}.{1}'.format(video_id, video_ext)
         video_size = os.path.getsize(video_path + video)
         if video_size < 50000000:
             bot.send_video(chat_id=update.message.chat_id, video=open(
@@ -125,7 +132,6 @@ def link_search(message):
 
 
 def error(bot, update, error):
-    update.message.reply_text('An error occured while trying to execute this action')
     logger.error('Update "%s" caused error "%s"', update, error)
 
 
