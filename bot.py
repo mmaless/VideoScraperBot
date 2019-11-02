@@ -31,6 +31,8 @@ def start(bot, update):
 def test(bot, update):
     update.message.reply_text('Works!')
 
+def getId(bot, update):
+    update.message.reply_text('You ID is: ' + str(update.message.chat_id))
 
 def mp4list(bot, update):
     if update.message.chat_id not in admin_chat_id:
@@ -145,6 +147,7 @@ def main():
     dp.add_handler(CommandHandler('mp3', mp3))
     dp.add_handler(CommandHandler('mp3list', mp3list))
     dp.add_handler(CommandHandler('mp4list', mp4list))
+    dp.add_handler(CommandHandler('id', getId))
     dp.add_handler(MessageHandler(Filters.text, mp4))
     dp.add_error_handler(error)
     updater.start_polling()
