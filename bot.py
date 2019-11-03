@@ -86,6 +86,8 @@ def mp4(bot, update):
         if video_size < 50000000:
             bot.send_video(chat_id=update.message.chat_id, video=open(
                 video_path + video, 'rb'), timeout=1000)
+            update.message.reply_text(
+                'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video)
         else:
             update.message.reply_text(
                 'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video)
