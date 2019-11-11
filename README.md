@@ -13,8 +13,8 @@ This project is still under development
 ## Config
 * admin_chat_id: bot admin
 * user_chat_id: users that are allowed to use the bot
-* video_path: location of the downloaded MP4 files
-* audio_path: location of the downloaded MP3 files
+* video_path: location of the downloaded video files
+* audio_path: location of the downloaded audio files
 * ftp_site: your website along with the directory where you are downloading the videos example https://mysite.com/mp4/'
 ## Commands
 * Simply just send a link to download the video
