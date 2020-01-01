@@ -10,6 +10,12 @@ This project is still under development
   * Install via pip: sudo -H pip install --upgrade youtube-dl
 * ffmpeg
   * Ubuntu: sudo apt-get install ffmpeg
+## Config
+* admin_chat_id: bot admin
+* user_chat_id: users that are allowed to use the bot
+* video_path: location of the downloaded video files
+* audio_path: location of the downloaded audio files
+* ftp_site: your website along with the directory where you are downloading the videos example https://mysite.com/mp4/'
 ## Commands
 * Simply just send a link to download the video
 * \mp4 followed by a link to download a video
