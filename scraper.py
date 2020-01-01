@@ -140,7 +140,8 @@ def error(bot, update, error):
 
 
 def main():
-    updater = Updater(token=telegram_token, use_context=True)
+    updater = Updater(token=telegram_token,  request_kwargs={
+                      'read_timeout': 1000, 'connect_timeout': 1000})
     dp = updater.dispatcher
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('test', test))
