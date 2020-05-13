@@ -15,11 +15,11 @@ This project is still under development
 * user_chat_id: users that are allowed to use the bot
 * video_path: location of the downloaded video files
 * audio_path: location of the downloaded audio files
-* ftp_site: your website along with the directory where you are downloading the videos example https://mysite.com/mp4/'
+* ftp_site: your website along with the directory where you are downloading the videos example https://mysite.com/mp4/' (used for large video files)
 ## Commands
 * Simply just send a link to download the video
 * \mp4 followed by a link to download a video
 * \mp3 followed by a link to download an audio
 * \test check if the bot is working
 ## Running the bot
-`python3 bot.py`
+`python3 scraper.py`
