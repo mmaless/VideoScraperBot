@@ -95,10 +95,10 @@ def mp4(update, context):
             context.bot.send_video(chat_id=update.message.chat_id, video=open(
                 video_path + video, 'rb'), timeout=1000)
             update.message.reply_text(
-                'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video)
+                'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video +'\nThe link expires after 7 days')
         else:
             update.message.reply_text(
-                'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video)
+                'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video +'\nThe link expires after 7 days')
     else:
         update.message.reply_text('That URL looks invalid')
 
@@ -129,9 +129,11 @@ def mp3(update, context):
         if audio_size < 50000000:
             context.bot.send_audio(chat_id=update.message.chat_id, audio=open(
                 audio_path + audio, 'rb'), timeout=1000)
+            update.message.reply_text(
+                'The file can be downloaded using the below link:\n' + ftp_site + 'mp3/' + audio +'\nThe link expires after 7 days')    
         else:
             update.message.reply_text(
-                'The file can be downloaded using the below link:\n' + ftp_site + 'mp3/' + audio)
+                'The file can be downloaded using the below link:\n' + ftp_site + 'mp3/' + audio +'\nThe link expires after 7 days')
     else:
         update.message.reply_text('That URL looks invalid')
 
