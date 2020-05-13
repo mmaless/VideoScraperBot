@@ -7,6 +7,7 @@ import youtube_dl
 import re
 import os
 import logging
+import time
 
 # Enable logging
 logging.basicConfig(filename='Logs/{:%Y-%m-%d}.log'.format(datetime.now()),
@@ -90,6 +91,7 @@ def mp4(update, context):
             video_ext = info_dict.get("ext", None)
             ydl.download([link])
         video = date + '_{0}.{1}'.format(video_id, video_ext)
+        os.utime(video_path + video, (time.time(), time.time()))
         video_size = os.path.getsize(video_path + video)
         if video_size < 50000000:
             context.bot.send_video(chat_id=update.message.chat_id, video=open(
@@ -108,6 +110,7 @@ def mp3(update, context):
             'You are not authorized to perform this action! Please submit a request by sending or clicking on this 👉 /request')
         return
     link = link_search(update.message.text)
+    date = '{:%Y-%m-%d}'.format(datetime.now())
     if link:
         ydl_opts = {
             'format': 'bestaudio/best',
@@ -117,14 +120,15 @@ def mp3(update, context):
                 'preferredquality': '192',
             }],
             'quiet': True,
-            'outtmpl': audio_path + '%(id)s.mp3'
+            'outtmpl': audio_path + date + '_%(id)s.%(ext)s'
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_id = info_dict.get("id", None)
             audio_ext = 'mp3'
             ydl.download([link])
-        audio = '{0}.{1}'.format(audio_id, audio_ext)
+        audio = date + '_{0}.{1}'.format(audio_id, audio_ext)
+        os.utime(audio_path + audio, (time.time(), time.time()))
         audio_size = os.path.getsize(audio_path + audio)
         if audio_size < 50000000:
             context.bot.send_audio(chat_id=update.message.chat_id, audio=open(
