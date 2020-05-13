@@ -17,8 +17,9 @@ logger = logging.getLogger(__name__)
 
 LINK_REGEX = r"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
 
+requests = []
 
-def start(bot, update):
+def start(update, context):
     update.message.reply_text(
         "Hi! this bot uses the command line utility \"youtube-dl\" https://github.com/ytdl-org/youtube-dl" +
         "to download videos or audios from YouTube.com and other video sites. \n" +
@@ -28,16 +29,23 @@ def start(bot, update):
         "Code: https://github.com/mhmdess/VideoScraperBot")
 
 
-def test(bot, update):
+def test(update, context):
     update.message.reply_text('Works!')
 
-def getId(bot, update):
-    update.message.reply_text('You ID is: ' + str(update.message.chat_id))
+def request(update, context):
+    if update.message.chat_id not in requests:
+        requests.append(update.message.chat_id)
+        msg = 'User: ' + update.message.chat.username + ' ID: ' + str(update.message.chat_id) + ', requested access to the bot!'
+        context.bot.send_message(chat_id=admin_chat_id[0], text= msg)
+        update.message.reply_text('Request submitted.')
+    else:
+        update.message.reply_text('Request already submitted please wait!')
 
-def mp4list(bot, update):
+def getId(update, context):
+    update.message.reply_text('Your ID is: ' + str(update.message.chat_id))
+
+def mp4list(update, context):
     if update.message.chat_id not in admin_chat_id:
-        error(bot, str(update.message.chat_id),
-              'failed attempt to list mp4 files')
         update.message.reply_text(
             'You are not authorized to perform this action!')
         return
@@ -48,10 +56,8 @@ def mp4list(bot, update):
     update.message.reply_text(msg)
 
 
-def mp3list(bot, update):
+def mp3list(update, context):
     if update.message.chat_id not in admin_chat_id:
-        error(bot, str(update.message.chat_id),
-              'failed attempt to list mp3 files')
         update.message.reply_text(
             'You are not authorized to perform this action!')
         return
@@ -61,12 +67,10 @@ def mp3list(bot, update):
         msg += ftp_site + 'mp3/' + file + '\n'
     update.message.reply_text(msg)
 
-
-def mp4(bot, update):
+def mp4(update, context):
     if update.message.chat_id not in user_chat_id:
-        error(bot, str(update.message.chat_id), 'failed attempt to download')
         update.message.reply_text(
-            'You are not authorized to perform this action!')
+            'You are not authorized to perform this action! Please submit a request by sending or clicking on this 👉 /request')
         return
     link = link_search(update.message.text)
     date = '{:%Y-%m-%d}'.format(datetime.now())
@@ -84,7 +88,7 @@ def mp4(bot, update):
         video = date + '_{0}.{1}'.format(video_id, video_ext)
         video_size = os.path.getsize(video_path + video)
         if video_size < 50000000:
-            bot.send_video(chat_id=update.message.chat_id, video=open(
+            context.bot.send_video(chat_id=update.message.chat_id, video=open(
                 video_path + video, 'rb'), timeout=1000)
             update.message.reply_text(
                 'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video)
@@ -94,9 +98,10 @@ def mp4(bot, update):
     else:
         update.message.reply_text('That URL looks invalid')
 
-
-def mp3(bot, update):
+def mp3(update, context):
     if update.message.chat_id not in user_chat_id:
+        update.message.reply_text(
+            'You are not authorized to perform this action! Please submit a request by sending or clicking on this 👉 /request')
         return
     link = link_search(update.message.text)
     if link:
@@ -118,7 +123,7 @@ def mp3(bot, update):
         audio = '{0}.{1}'.format(audio_id, audio_ext)
         audio_size = os.path.getsize(audio_path + audio)
         if audio_size < 50000000:
-            bot.send_audio(chat_id=update.message.chat_id, audio=open(
+            context.bot.send_audio(chat_id=update.message.chat_id, audio=open(
                 audio_path + audio, 'rb'), timeout=1000)
         else:
             update.message.reply_text(
@@ -134,13 +139,11 @@ def link_search(message):
     else:
         return ""
 
-
-def error(bot, update, error):
-    logger.error('Update "%s" caused error "%s"', update, error)
-
+def error(update, context):
+    logger.error('Update "%s" caused error "%s"', update, context.error)
 
 def main():
-    updater = Updater(token=telegram_token,  request_kwargs={
+    updater = Updater(telegram_token, use_context=True, request_kwargs={
                       'read_timeout': 1000, 'connect_timeout': 1000})
     dp = updater.dispatcher
     dp.add_handler(CommandHandler('start', start))
@@ -150,11 +153,11 @@ def main():
     dp.add_handler(CommandHandler('mp3list', mp3list))
     dp.add_handler(CommandHandler('mp4list', mp4list))
     dp.add_handler(CommandHandler('id', getId))
+    dp.add_handler(CommandHandler('request', request))
     dp.add_handler(MessageHandler(Filters.text, mp4))
     dp.add_error_handler(error)
     updater.start_polling()
     updater.idle()
-
 
 if __name__ == '__main__':
     main()
