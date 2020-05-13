@@ -22,4 +22,4 @@ This project is still under development
 * \mp3 followed by a link to download an audio
 * \test check if the bot is working
 ## Running the bot
-`python3 bot.py`
+`python3 scraper.py`
