@@ -33,6 +33,10 @@ def test(update, context):
     update.message.reply_text('Works!')
 
 def request(update, context):
+    if update.message.chat_id in user_chat_id:
+        update.message.reply_text(
+            'You already have access!')
+        return
     if update.message.chat_id not in requests:
         requests.append(update.message.chat_id)
         msg = 'User: ' + update.message.chat.username + ' ID: ' + str(update.message.chat_id) + ', requested access to the bot!'
