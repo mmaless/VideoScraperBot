@@ -20,6 +20,7 @@ This project is still under development
 * Simply just send a link to download the video
 * \mp4 followed by a link to download a video
 * \mp3 followed by a link to download an audio
+* \request to request access to the bot, the request will go to the Admin
 * \test check if the bot is working
 ## Running the bot
 `python3 scraper.py`
