@@ -150,7 +150,9 @@ def link_search(message):
         return ""
 
 def error(update, context):
+    update.message.reply_text('Download failed :(')
     logger.error('Update "%s" caused error "%s"', update, context.error)
+    context.bot.send_message(chat_id=admin_chat_id[0], text= 'An error occurred: ' + context.error)
 
 def main():
     updater = Updater(telegram_token, use_context=True, request_kwargs={
