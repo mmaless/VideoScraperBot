@@ -7,3 +7,5 @@ bot.log
 /Logs
 .idea
 config.pyc
+scraper.py
+instagram.txt
