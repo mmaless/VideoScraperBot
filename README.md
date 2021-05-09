@@ -5,7 +5,7 @@ This project is still under development
 ## Requirements 
 * Python 3+
 * [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot)
-  * Install via pip: pip install python-telegram-bot --upgrade
+  * Install via pip: pip3 install python-telegram-bot --upgrade
 * [youtube-dl](https://github.com/rg3/youtube-dl/)
   * Install via pip: pip3 install --upgrade youtube-dl
 * ffmpeg
