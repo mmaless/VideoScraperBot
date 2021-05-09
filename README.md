@@ -10,6 +10,8 @@ This project is still under development
   * Install via pip: sudo -H pip install --upgrade youtube-dl
 * ffmpeg
   * Ubuntu: sudo apt-get install ffmpeg
+* Instagram cookies
+  * Install cookies.txt chrome extension, login to instagram and export your cookies to 'instagram.txt' file, place the file in the code directory
 ## Config
 * admin_chat_id: bot admin
 * user_chat_id: users that are allowed to use the bot
