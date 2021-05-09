@@ -25,4 +25,5 @@ This project is still under development
 * \request to request access to the bot, the request will go to the Admin
 * \test check if the bot is working
 ## Running the bot
-`python3 scraper.py`
+* Install requirments `pip3 install -r requirements.txt`
+* Run the bot `python3 scraper.py`
