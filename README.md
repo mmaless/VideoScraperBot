@@ -1,6 +1,6 @@
 # VideoScraperBot
 A telegram bot that uses the command line utility [youtube-dl](https://github.com/rg3/youtube-dl/) to download videos from YouTube and other video sites.
-- This project is still under development
+- 🚧 This project is still under development 🚧
 
 ## Requirements 
 * Python 3+
