@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from config import telegram_token, admin_chat_id, user_chat_id, video_path, audio_path, ftp_site
+from config import telegram_token, admin_chat_id, user_chat_id, video_path, audio_path, enable_ftp, ftp_site
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from datetime import datetime
@@ -104,11 +104,15 @@ def mp4(update, context):
         if video_size < 50000000:
             context.bot.send_video(chat_id=update.message.chat_id, video=open(
                 video_path + video, 'rb'), timeout=1000)
-            update.message.reply_text(
-                'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video +'\nThe link expires after 7 days')
+            if enable_ftp == 'true' :
+                update.message.reply_text(
+                    'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video +'\nThe link expires after 7 days')
         else:
-            update.message.reply_text(
-                'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video +'\nThe link expires after 7 days')
+            if enable_ftp == 'true' :
+                update.message.reply_text(
+                    'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video +'\nThe link expires after 7 days')
+            else: update.message.reply_text(
+                    'The file size is too big and cannot be sent using Telegram')
     else:
         update.message.reply_text('That URL looks invalid')
 
@@ -154,11 +158,15 @@ def mp3(update, context):
         if audio_size < 50000000:
             context.bot.send_audio(chat_id=update.message.chat_id, audio=open(
                 audio_path + audio, 'rb'), timeout=1000)
-            update.message.reply_text(
-                'The file can be downloaded using the below link:\n' + ftp_site + 'mp3/' + audio +'\nThe link expires after 7 days')    
+            if enable_ftp == 'true' :
+                update.message.reply_text(
+                    'The file can be downloaded using the below link:\n' + ftp_site + 'mp3/' + audio +'\nThe link expires after 7 days')    
         else:
-            update.message.reply_text(
-                'The file can be downloaded using the below link:\n' + ftp_site + 'mp3/' + audio +'\nThe link expires after 7 days')
+            if enable_ftp == 'true' :
+                update.message.reply_text(
+                    'The file can be downloaded using the below link:\n' + ftp_site + 'mp3/' + audio +'\nThe link expires after 7 days')
+            else: update.message.reply_text(
+                    'The file size is too big and cannot be sent using Telegram')
     else:
         update.message.reply_text('That URL looks invalid')
 
