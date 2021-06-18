@@ -111,7 +111,8 @@ def mp4(update, context):
             if enable_ftp == 'true' :
                 update.message.reply_text(
                     'The file can be downloaded using the below link:\n' + ftp_site + 'mp4/' + video +'\nThe link expires after 7 days')
-            else: update.message.reply_text(
+            else: 
+                update.message.reply_text(
                     'The file size is too big and cannot be sent using Telegram')
     else:
         update.message.reply_text('That URL looks invalid')
@@ -165,7 +166,8 @@ def mp3(update, context):
             if enable_ftp == 'true' :
                 update.message.reply_text(
                     'The file can be downloaded using the below link:\n' + ftp_site + 'mp3/' + audio +'\nThe link expires after 7 days')
-            else: update.message.reply_text(
+            else: 
+                update.message.reply_text(
                     'The file size is too big and cannot be sent using Telegram')
     else:
         update.message.reply_text('That URL looks invalid')
