@@ -27,7 +27,7 @@ def start(update, context):
         "To download a video just send the link or use the command \\mp4 " +
         "and for audio use \\mp3 followed by the link \n" +
         "Example: \\mp4 https://www.youtube.com/watch?v=dQw4w9WgXcQ \n" +
-        "Code: https://github.com/mhmdess/VideoScraperBot")
+        "Code: https://github.com/mmaless/VideoScraperBot")
 
 
 def test(update, context):
