@@ -80,19 +80,11 @@ def mp4(update, context):
     link = link_search(update.message.text)
     date = '{:%Y-%m-%d}'.format(datetime.now())
     if link:
-        if 'instagram' in link:
-            ydl_opts = {
-                'format': 'mp4',
-                'quiet': True,
-                'outtmpl': video_path + date + '_%(id)s.%(ext)s',
-                'cookiefile': 'instagram.txt'
-            }
-        else:
-            ydl_opts = {
-                'format': 'mp4',
-                'quiet': True,
-                'outtmpl': video_path + date + '_%(id)s.%(ext)s',
-            }
+        ydl_opts = {
+            'format': 'mp4',
+            'quiet': True,
+            'outtmpl': video_path + date + '_%(id)s.%(ext)s',
+        }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             video_id = info_dict.get("id", None)
