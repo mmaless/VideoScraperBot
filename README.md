@@ -1,12 +1,12 @@
 # VideoScraperBot
-A telegram bot that uses the command line utility [youtube-dl](https://github.com/rg3/youtube-dl/) to download videos from YouTube and other video sites.
+A telegram bot that uses the command line utility [yt-dlp](https://github.com/yt-dlp/yt-dlp) to download videos from YouTube and other video sites.
 - 🚧 This project is still under development 🚧
 
 ## Requirements 
 * Python 3+
 * [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot)
   * Install via pip: pip3 install python-telegram-bot --upgrade
-* [youtube-dl](https://github.com/rg3/youtube-dl/)
+* [yt-dlp](https://github.com/yt-dlp/yt-dlp)
   * Install via pip: pip3 install --upgrade youtube-dl
 * ffmpeg
   * Ubuntu: sudo apt-get install ffmpeg
