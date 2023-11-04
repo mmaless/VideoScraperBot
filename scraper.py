@@ -22,7 +22,7 @@ requests = []
 
 async def start(update, context):
     await update.message.reply_text(
-        "Hi! this bot uses the command line utility \"youtube-dl\" https://github.com/ytdl-org/youtube-dl" +
+        "Hi! this bot uses the command line utility \"youtube-dl\" https://github.com/ytdl-org/youtube-dl " +
         "to download videos or audios from YouTube.com and other video sites. \n" +
         "To download a video just send the link or use the command \\mp4 " +
         "and for audio use \\mp3 followed by the link \n" +
