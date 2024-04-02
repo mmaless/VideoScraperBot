@@ -6,7 +6,7 @@ httpcore==0.18.0
 httpx==0.25.0
 idna==3.4
 mutagen==1.47.0
-pycryptodomex==3.19.0
+pycryptodomex==3.19.1
 python-telegram-bot==20.6
 sniffio==1.3.0
 websockets==11.0.3
